@@ -5,12 +5,7 @@
 **Reddit Extraction and Data Dumper**
 
 [![PyPI](https://img.shields.io/pypi/v/redd?label=pypi&cacheSeconds=3600)](https://pypi.org/project/redd/)
-[![Python](https://img.shields.io/pypi/pyversions/redd?cacheSeconds=3600)](https://pypi.org/project/redd/)
-[![Downloads](https://img.shields.io/pypi/dm/redd?cacheSeconds=3600)](https://pypi.org/project/redd/)
-[![CI](https://github.com/eliasbiondo/redd/actions/workflows/ci.yml/badge.svg)](https://github.com/eliasbiondo/redd/actions/workflows/ci.yml)
-[![Release](https://github.com/eliasbiondo/redd/actions/workflows/release-and-publish.yml/badge.svg)](https://github.com/eliasbiondo/redd/actions/workflows/release-and-publish.yml)
 [![License: MIT](https://img.shields.io/github/license/eliasbiondo/redd?cacheSeconds=3600)](https://github.com/eliasbiondo/redd/blob/main/LICENSE)
-[![Code style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 A modern, async-ready Python library for extracting Reddit data.
 No API keys required.
