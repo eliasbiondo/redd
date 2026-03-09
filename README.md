@@ -23,9 +23,10 @@ No API keys required.
 3. [Quick Start](#3-quick-start)
 4. [API Reference](#4-api-reference)
 5. [Architecture](#5-architecture)
-6. [Contributing](#6-contributing)
-7. [Disclaimer](#7-disclaimer)
-8. [License](#8-license)
+6. [Examples](#6-examples)
+7. [Contributing](#7-contributing)
+8. [Disclaimer](#8-disclaimer)
+9. [License](#9-license)
 
 ---
 
@@ -249,21 +250,54 @@ adapters, mock dependencies in tests, or add new transports.
 
 ---
 
-## 6. Contributing
+## 6. Examples
+
+See the [examples/](examples/) directory for runnable scripts.
+
+**Fetch hot posts from a subreddit** ([subreddit_hot_posts.py](examples/subreddit_hot_posts.py)):
+
+```python
+from redd import Category, Redd
+
+with Redd() as r:
+    posts = r.get_subreddit_posts("brdev", limit=10, category=Category.HOT)
+
+    for i, post in enumerate(posts, 1):
+        print(f"{i:>2}. [{post.score:>5}] {post.title}")
+        print(f"     by u/{post.author} — {post.num_comments} comments")
+        print(f"     {post.url}")
+        print()
+```
+
+Sample output:
+
+```
+ 1. [   91] Qual o plano B de vocês caso a área piore muito?
+     by u/Spiritual_Pangolin18 — 185 comments
+     https://www.reddit.com/r/brdev/comments/1rnytuh/...
+
+ 2. [   83] Fuçando minhas coisas, encontrei um código de 600 linhas em Portugol
+     by u/Dramatic-Revenue-802 — 7 comments
+     https://www.reddit.com/r/brdev/comments/1ro269a/...
+```
+
+---
+
+## 7. Contributing
 
 Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for
 guidelines on setting up the project, running tests, and submitting changes.
 
 ---
 
-## 7. Disclaimer
+## 8. Disclaimer
 
 Use responsibly. Reddit may rate-limit or ban IPs that make excessive requests.
 Consider using rotating proxies for large-scale scraping.
 
 ---
 
-## 8. License
+## 9. License
 
 MIT. See [LICENSE](LICENSE) for details.
 
