@@ -1,0 +1,87 @@
+[project]
+name = "redd"
+version = "0.1.0"
+description = "Reddit Extraction and Data Dumper — a modern, async-ready library for extracting Reddit data without API keys."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0",
+]
+authors = [
+    { name = "Elias Biondo", email = "contato@eliasbiondo.com" },
+]
+keywords = ["reddit", "scraper", "extraction", "data", "async"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/eliasbiondo/redd"
+Repository = "https://github.com/eliasbiondo/redd"
+Issues = "https://github.com/eliasbiondo/redd/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/redd"]
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Ruff (linter + formatter)
+# ──────────────────────────────────────────────────────────────────────────────
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/redd/adapters/_user_agents.py" = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["redd"]
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Pytest
+# ──────────────────────────────────────────────────────────────────────────────
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "e2e: end-to-end tests that make real HTTP requests to Reddit",
+]
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Mypy
+# ──────────────────────────────────────────────────────────────────────────────
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+    "ruff>=0.9.0",
+]
