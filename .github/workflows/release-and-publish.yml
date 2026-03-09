@@ -1,4 +1,4 @@
-name: Release
+name: Release and Publish
 
 on:
   push:
@@ -12,10 +12,10 @@ permissions:
 
 jobs:
   release:
-    name: Bump version and release
+    name: Bump version, release, and publish
     runs-on: ubuntu-latest
+    environment: pypi
 
-    # Skip if the commit was made by this workflow (avoid infinite loop)
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     steps:
@@ -24,6 +24,20 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Run tests
+        run: uv run pytest -v -m "not e2e"
 
       - name: Configure Git
         run: |
@@ -91,3 +105,11 @@ jobs:
           gh release create "$TAG" \
             --title "$TAG" \
             --generate-notes
+
+      - name: Build package
+        run: uv build
+
+      - name: Publish to PyPI
+        run: uv publish
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
