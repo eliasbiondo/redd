@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -34,11 +36,22 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras
 
-      - name: Run linter
-        run: uv run ruff check src/ tests/
+      - name: Auto-fix lint and format
+        if: matrix.python-version == '3.13'
+        run: |
+          uv run ruff check --fix src/ tests/
+          uv run ruff format src/ tests/
 
-      - name: Check formatting
-        run: uv run ruff format --check src/ tests/
+      - name: Commit lint fixes
+        if: matrix.python-version == '3.13'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "style: auto-fix lint and formatting [skip ci]"
+            git push
+          fi
 
       - name: Run tests
         run: uv run pytest -v -m "not e2e"

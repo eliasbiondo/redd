@@ -46,7 +46,7 @@ packages = ["src/redd"]
 [tool.ruff]
 target-version = "py310"
 line-length = 120
-src = ["src"]
+src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]

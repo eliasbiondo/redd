@@ -15,7 +15,6 @@ from redd._parsing import (
     parse_user_items,
 )
 
-
 # ──────────────────────────────────────────────────────────────────────────────
 # Fixtures
 # ──────────────────────────────────────────────────────────────────────────────
@@ -24,49 +23,55 @@ from redd._parsing import (
 def _search_response(count: int = 3) -> dict:
     children = []
     for i in range(count):
-        children.append({
-            "kind": "t3",
-            "data": {
-                "title": f"Post {i}",
-                "permalink": f"/r/test/comments/id{i}/post_{i}/",
-                "selftext": f"Body {i}. " * 10,
-                "subreddit": "test",
-                "score": (i + 1) * 100,
-                "author": f"user_{i}",
-                "created_utc": 1700000000.0 + i,
-                "num_comments": i * 5,
-            },
-        })
+        children.append(
+            {
+                "kind": "t3",
+                "data": {
+                    "title": f"Post {i}",
+                    "permalink": f"/r/test/comments/id{i}/post_{i}/",
+                    "selftext": f"Body {i}. " * 10,
+                    "subreddit": "test",
+                    "score": (i + 1) * 100,
+                    "author": f"user_{i}",
+                    "created_utc": 1700000000.0 + i,
+                    "num_comments": i * 5,
+                },
+            }
+        )
     return {"data": {"children": children, "after": "t3_next", "before": None}}
 
 
 def _post_detail_response(num_comments: int = 2) -> list:
     comments = []
     for i in range(num_comments):
-        comments.append({
-            "kind": "t1",
-            "data": {
-                "author": f"commenter_{i}",
-                "body": f"Comment {i}.",
-                "score": (i + 1) * 10,
-                "replies": "",
-            },
-        })
+        comments.append(
+            {
+                "kind": "t1",
+                "data": {
+                    "author": f"commenter_{i}",
+                    "body": f"Comment {i}.",
+                    "score": (i + 1) * 10,
+                    "replies": "",
+                },
+            }
+        )
     return [
         {
             "data": {
-                "children": [{
-                    "data": {
-                        "title": "Test Post",
-                        "author": "author",
-                        "selftext": "Body text.",
-                        "score": 1500,
-                        "permalink": "/r/test/comments/xyz/test_post/",
-                        "subreddit": "test",
-                        "created_utc": 1700000000.0,
-                        "num_comments": num_comments,
-                    },
-                }],
+                "children": [
+                    {
+                        "data": {
+                            "title": "Test Post",
+                            "author": "author",
+                            "selftext": "Body text.",
+                            "score": 1500,
+                            "permalink": "/r/test/comments/xyz/test_post/",
+                            "subreddit": "test",
+                            "created_utc": 1700000000.0,
+                            "num_comments": num_comments,
+                        },
+                    }
+                ],
             },
         },
         {"data": {"children": comments}},
@@ -77,18 +82,20 @@ def _nested_comments_response() -> list:
     return [
         {
             "data": {
-                "children": [{
-                    "data": {
-                        "title": "Nested Post",
-                        "author": "op",
-                        "selftext": "Body.",
-                        "score": 500,
-                        "permalink": "/r/test/comments/nest/nested_post/",
-                        "subreddit": "test",
-                        "created_utc": 1700000000.0,
-                        "num_comments": 3,
-                    },
-                }],
+                "children": [
+                    {
+                        "data": {
+                            "title": "Nested Post",
+                            "author": "op",
+                            "selftext": "Body.",
+                            "score": 500,
+                            "permalink": "/r/test/comments/nest/nested_post/",
+                            "subreddit": "test",
+                            "created_utc": 1700000000.0,
+                            "num_comments": 3,
+                        },
+                    }
+                ],
             },
         },
         {
@@ -102,15 +109,17 @@ def _nested_comments_response() -> list:
                             "score": 50,
                             "replies": {
                                 "data": {
-                                    "children": [{
-                                        "kind": "t1",
-                                        "data": {
-                                            "author": "child",
-                                            "body": "Reply.",
-                                            "score": 20,
-                                            "replies": "",
-                                        },
-                                    }],
+                                    "children": [
+                                        {
+                                            "kind": "t1",
+                                            "data": {
+                                                "author": "child",
+                                                "body": "Reply.",
+                                                "score": 20,
+                                                "replies": "",
+                                            },
+                                        }
+                                    ],
                                 },
                             },
                         },
@@ -128,46 +137,52 @@ def _nested_comments_response() -> list:
 def _subreddit_listing(count: int = 3, after: str | None = None) -> dict:
     children = []
     for i in range(count):
-        children.append({
-            "kind": "t3",
-            "data": {
-                "title": f"Sub Post {i}",
-                "author": f"author_{i}",
-                "permalink": f"/r/test/comments/s{i}/sub_post_{i}/",
-                "score": (i + 1) * 200,
-                "num_comments": (i + 1) * 3,
-                "created_utc": 1700000000.0 + i * 3600,
-                "subreddit": "test",
-                "post_hint": "image" if i == 0 else "self",
-                "url": f"https://i.redd.it/img{i}.jpg" if i == 0 else f"https://reddit.com/{i}",
-                "thumbnail": "https://thumb.example.com/t.jpg" if i == 1 else "self",
-            },
-        })
+        children.append(
+            {
+                "kind": "t3",
+                "data": {
+                    "title": f"Sub Post {i}",
+                    "author": f"author_{i}",
+                    "permalink": f"/r/test/comments/s{i}/sub_post_{i}/",
+                    "score": (i + 1) * 200,
+                    "num_comments": (i + 1) * 3,
+                    "created_utc": 1700000000.0 + i * 3600,
+                    "subreddit": "test",
+                    "post_hint": "image" if i == 0 else "self",
+                    "url": f"https://i.redd.it/img{i}.jpg" if i == 0 else f"https://reddit.com/{i}",
+                    "thumbnail": "https://thumb.example.com/t.jpg" if i == 1 else "self",
+                },
+            }
+        )
     return {"data": {"children": children, "after": after}}
 
 
 def _user_activity(num_posts: int = 1, num_comments: int = 1, after: str | None = None) -> dict:
     children = []
     for i in range(num_posts):
-        children.append({
-            "kind": "t3",
-            "data": {
-                "title": f"User Post {i}",
-                "subreddit": "test",
-                "permalink": f"/r/test/comments/up{i}/user_post_{i}/",
-                "created_utc": 1700000000.0 + i,
-            },
-        })
+        children.append(
+            {
+                "kind": "t3",
+                "data": {
+                    "title": f"User Post {i}",
+                    "subreddit": "test",
+                    "permalink": f"/r/test/comments/up{i}/user_post_{i}/",
+                    "created_utc": 1700000000.0 + i,
+                },
+            }
+        )
     for i in range(num_comments):
-        children.append({
-            "kind": "t1",
-            "data": {
-                "body": f"User comment {i}.",
-                "subreddit": "askreddit",
-                "permalink": f"/r/askreddit/comments/uc{i}/thread/c{i}/",
-                "created_utc": 1700000000.0 + num_posts + i,
-            },
-        })
+        children.append(
+            {
+                "kind": "t1",
+                "data": {
+                    "body": f"User comment {i}.",
+                    "subreddit": "askreddit",
+                    "permalink": f"/r/askreddit/comments/uc{i}/thread/c{i}/",
+                    "created_utc": 1700000000.0 + num_posts + i,
+                },
+            }
+        )
     return {"data": {"children": children, "after": after}}
 
 
