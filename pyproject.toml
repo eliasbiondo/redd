@@ -1,6 +1,6 @@
 [project]
 name = "redd"
-version = "0.1.0"
+version = "0.1.1"
 description = "Reddit Extraction and Data Dumper — a modern, async-ready library for extracting Reddit data without API keys."
 readme = "README.md"
 license = { text = "MIT" }
