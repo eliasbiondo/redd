@@ -1,4 +1,3 @@
-<div align="center">
 
 # REDD
 
@@ -10,7 +9,13 @@
 A modern, async-ready Python library for extracting Reddit data.
 No API keys required.
 
-</div>
+
+
+
+https://github.com/user-attachments/assets/2c377e2a-ac44-4596-89cd-60ce45ce3f4c
+
+
+
 
 ---
 
