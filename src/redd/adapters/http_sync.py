@@ -64,8 +64,18 @@ class RequestsHttpAdapter:
 
     # ── HttpPort interface ────────────────────────────────────────────────
 
+    _BROWSER_HEADERS: dict[str, str] = {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
+        "DNT": "1",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+    }
+
     def get(self, url: str, *, params: dict[str, Any] | None = None, timeout: float | None = None) -> dict[str, Any]:
         """Perform a GET request and return decoded JSON."""
+        self._session.headers.update(self._BROWSER_HEADERS)
         if self._rotate_ua:
             self._session.headers["User-Agent"] = random_user_agent()
 
@@ -78,6 +88,7 @@ class RequestsHttpAdapter:
 
     def download(self, url: str, *, dest: str, timeout: float | None = None) -> str:
         """Stream-download a binary resource to *dest*."""
+        self._session.headers.update(self._BROWSER_HEADERS)
         if self._rotate_ua:
             self._session.headers["User-Agent"] = random_user_agent()
 
