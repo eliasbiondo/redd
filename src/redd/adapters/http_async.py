@@ -61,7 +61,14 @@ class HttpxAsyncAdapter:
         timeout: float | None = None,
     ) -> dict[str, Any]:
         """Perform an async GET request and return decoded JSON."""
-        headers: dict[str, str] = {}
+        headers: dict[str, str] = {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
+            "DNT": "1",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1",
+        }
         if self._rotate_ua:
             headers["User-Agent"] = random_user_agent()
 
@@ -74,7 +81,14 @@ class HttpxAsyncAdapter:
 
     async def download(self, url: str, *, dest: str, timeout: float | None = None) -> str:
         """Stream-download a binary resource to *dest*."""
-        headers: dict[str, str] = {}
+        headers: dict[str, str] = {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
+            "DNT": "1",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1",
+        }
         if self._rotate_ua:
             headers["User-Agent"] = random_user_agent()
 
